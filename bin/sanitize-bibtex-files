@@ -9,14 +9,24 @@ from bibtexparser.bwriter import BibTexWriter
 
 def remove_abstract_from_bibtex_file(path):
     sys.stderr.write(f"biblint: check {path}...")
+
+    ok = True
+
     with open(path, "r") as bib:
         db = bibtexparser.load(bib)
         for item in db.entries:
             if "abstract" in item:
                 sys.stderr.write(f"remove abstract field...")
                 del item["abstract"]
+                ok = False
+
+    if ok:
+        sys.stderr.write(f"ok\n")
+        return
+
     with open(path, "w") as bib:
         bib.write(BibTexWriter().write(db))
+
     sys.stderr.write(f"done\n")
 
 
