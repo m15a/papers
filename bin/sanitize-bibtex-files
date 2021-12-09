@@ -1,0 +1,29 @@
+#!/usr/bin/env python3
+
+import sys
+from pathlib import Path
+
+import bibtexparser
+from bibtexparser.bwriter import BibTexWriter
+
+
+def remove_abstract_from_bibtex_file(path):
+    sys.stderr.write(f"biblint: check {path}...")
+    with open(path, "r") as bib:
+        db = bibtexparser.load(bib)
+        for item in db.entries:
+            if "abstract" in item:
+                sys.stderr.write(f"remove abstract field...")
+                del item["abstract"]
+    with open(path, "w") as bib:
+        bib.write(BibTexWriter().write(db))
+    sys.stderr.write(f"done\n")
+
+
+def main():
+    for path in Path(".", "bib").glob("*.bib"):
+        remove_abstract_from_bibtex_file(path)
+
+
+if __name__ == "__main__":
+    main()
