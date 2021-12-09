@@ -21,7 +21,7 @@ def remove_abstract_from_bibtex_file(path):
 
 
 def main():
-    for path in Path(".", "bib").glob("*.bib"):
+    for path in sys.argv[1:]:
         remove_abstract_from_bibtex_file(path)
 
 
