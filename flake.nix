@@ -19,6 +19,7 @@
           ps.black
           ps.isort
           ps.bibtexparser
+          ps.pre-commit
         ]))
         pkgs.pyright
       ];
