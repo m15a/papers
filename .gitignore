@@ -1,0 +1,4 @@
+# files or directories for the git plugin to ignore
+.cache/
+doc/*
+!doc/.gitkeep
