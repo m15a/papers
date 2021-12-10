@@ -8,19 +8,51 @@
   };
 
   outputs = { self, nixpkgs, flake-utils }:
-  flake-utils.lib.eachDefaultSystem (system:
+  {
+    overlay = final: prev: {
+      muzzle-bibfile = final.runCommandNoCC "muzzle-bibfile" {
+        buildInputs = [ final.makeWrapper ];
+      } (let
+        ourPython3 = prev.python3.withPackages (ps: [ ps.bibtexparser ]);
+      in ''
+        mkdir -p $out/bin
+        install ${./bin/muzzle-bibfile} -m 755 $out/bin/muzzle-bibfile
+        wrapProgram $out/bin/muzzle-bibfile --prefix PATH : ${final.lib.makeBinPath [ ourPython3 ]}
+      '');
+
+      papersEnv = final.buildEnv {
+        name = "papers-env";
+        paths = with final; [
+          pubs
+          muzzle-bibfile
+        ];
+      };
+    };
+  } // flake-utils.lib.eachDefaultSystem (system:
   let
-    pkgs = nixpkgs.legacyPackages.${system};
+    pkgs = import nixpkgs {
+      overlays = [ self.overlay ];
+      inherit system;
+    };
+
+    pythonEnv = pkgs.python3.withPackages (ps: [
+      ps.black
+      ps.isort
+      ps.pre-commit
+    ]);
   in
   {
+    packages = {
+      inherit (pkgs)
+      muzzle-bibfile
+      papersEnv;
+    };
+
+    defaultPackage = pkgs.papersEnv;
+
     devShell = pkgs.mkShell {
       buildInputs = [
-        (pkgs.python3.withPackages (ps: [
-          ps.black
-          ps.isort
-          ps.bibtexparser
-          ps.pre-commit
-        ]))
+        pythonEnv
         pkgs.pyright
       ];
     };
