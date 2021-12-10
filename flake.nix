@@ -59,7 +59,7 @@
       inherit system;
     };
 
-    pythonEnv = pkgs.python3.withPackages (ps: [
+    pythonDevEnv = pkgs.python3.withPackages (ps: [
       ps.black
       ps.isort
       ps.pre-commit
@@ -77,7 +77,7 @@
 
     devShell = pkgs.mkShell {
       buildInputs = [
-        pythonEnv
+        pythonDevEnv
         pkgs.pyright
       ];
     };
