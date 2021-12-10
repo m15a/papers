@@ -35,6 +35,7 @@
         buildInputs = (old.buildInputs or []) ++ [
           final.installShellFiles
         ];
+        patches = (old.patches or []) ++ [ ./patches/pubs.patch ];
         postInstall = ''
           register="${final.python3.pkgs.argcomplete}/bin/register-python-argcomplete"
           "$register" --shell bash pubs > pubs.bash
