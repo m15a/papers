@@ -13,11 +13,14 @@
       muzzle-bibfile = final.runCommandNoCC "muzzle-bibfile" {
         buildInputs = [ final.makeWrapper ];
       } (let
-        ourPython3 = prev.python3.withPackages (ps: [ ps.bibtexparser ]);
+        ourPython3 = final.python3.withPackages (ps: [ ps.bibtexparser ]);
       in ''
-        mkdir -p $out/bin
-        install ${./bin/muzzle-bibfile} -m 755 $out/bin/muzzle-bibfile
-        wrapProgram $out/bin/muzzle-bibfile --prefix PATH : ${final.lib.makeBinPath [ ourPython3 ]}
+        mkdir -p $out/bin/.unwrapped
+        install ${./bin/muzzle-bibfile} -m 755 $out/bin/.unwrapped/muzzle-bibfile
+        makeWrapper \
+            $out/bin/.unwrapped/muzzle-bibfile \
+            $out/bin/muzzle-bibfile \
+            --prefix PATH : ${final.lib.makeBinPath [ ourPython3 ]}
       '');
 
       # Don't forget to delete cache after bumping revision: $(pubsdir)/.cache
