@@ -1,4 +1,7 @@
 # files or directories for the git plugin to ignore
+.envrc
+.direnv/
+result
 .cache/
 doc/*
 !doc/.gitkeep

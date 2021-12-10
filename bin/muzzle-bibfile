@@ -1,0 +1,46 @@
+#!/usr/bin/env python3
+
+import os
+import sys
+
+import bibtexparser
+from bibtexparser.bwriter import BibTexWriter
+
+program_name = os.path.basename(__file__)
+
+
+def remove_abstract_from_bibfile(bibfile):
+    sys.stderr.write(f"{program_name}: check {bibfile}...")
+
+    ok = True
+
+    with open(bibfile, "r") as buf:
+        db = bibtexparser.load(buf)
+        for entry in db.entries:
+            if "abstract" in entry:
+                sys.stderr.write(f"remove abstract field...")
+                del entry["abstract"]
+                ok = False
+
+    if ok:
+        sys.stderr.write(f"ok\n")
+        return
+
+    with open(bibfile, "w") as buf:
+        buf.write(BibTexWriter().write(db))
+
+    sys.stderr.write(f"done\n")
+
+
+def main():
+    files = sys.argv[1:]
+    if len(files) < 1:
+        sys.stderr.write(f"USAGE: {program_name} [bibfile...] \n")
+        sys.exit(1)
+    for file in files:
+        remove_abstract_from_bibfile(file)
+    sys.exit(0)
+
+
+if __name__ == "__main__":
+    main()
