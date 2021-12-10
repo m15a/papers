@@ -60,8 +60,10 @@
     };
 
     pythonDevEnv = pkgs.python3.withPackages (ps: [
+      ps.bibtexparser
       ps.black
       ps.isort
+      ps.flake8
       ps.pre-commit
     ]);
   in

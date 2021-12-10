@@ -19,3 +19,9 @@ repos:
         language: python
         entry: black
         types: [python]
+      - id: flake8
+        name: Lint Python files
+        language: python
+        entry: flake8
+        types: [python]
+        require_serial: true
