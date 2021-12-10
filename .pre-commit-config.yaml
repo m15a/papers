@@ -5,10 +5,10 @@ repos:
     hooks:
       - id: muzzle-bibfile
         name: Sanitize BibTeX files
-        language: script
+        language: system
         types: [text]
         files: 'bib/.*\.bib'
-        entry: ./bin/muzzle-bibfile
+        entry: muzzle-bibfile
       - id: isort
         name: Sort Python imports
         language: python
