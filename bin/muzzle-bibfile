@@ -18,18 +18,18 @@ def remove_abstract_from_bibfile(bibfile):
         db = bibtexparser.load(buf)
         for entry in db.entries:
             if "abstract" in entry:
-                sys.stderr.write(f"remove abstract field...")
+                sys.stderr.write("remove abstract field...")
                 del entry["abstract"]
                 ok = False
 
     if ok:
-        sys.stderr.write(f"ok\n")
+        sys.stderr.write("ok\n")
         return
 
     with open(bibfile, "w") as buf:
         buf.write(BibTexWriter().write(db))
 
-    sys.stderr.write(f"done\n")
+    sys.stderr.write("done\n")
 
 
 def main():
