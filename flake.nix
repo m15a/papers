@@ -66,6 +66,7 @@
     packages = {
       inherit (pkgs)
       muzzle-bibfile
+      pubs
       papersEnv;
     };
 
