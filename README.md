@@ -20,6 +20,15 @@ BibTeXファイルから`abstract`フィールドだけ削除するための補�
 git clone https://github.com/m15a/papers /path/to/papers
 ```
 
+あとは，cloneしたディレクトリで
+
+```sh
+pre-commit install
+```
+
+これで`abstract`が入ったBibTeXファイルがコミットされそうになるとストップがかかる。
+
+
 ### `pubs`の設定
 
 `~/.pubsrc`で，cloneしたこのディレクトリを`pubsdir`に設定する。
