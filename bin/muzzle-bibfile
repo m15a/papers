@@ -3,8 +3,7 @@
 import os
 import sys
 
-import bibtexparser
-from bibtexparser.bwriter import BibTexWriter
+import pybtex.database as bdb
 
 program_name = os.path.basename(__file__)
 
@@ -14,20 +13,18 @@ def remove_abstract_from_bibfile(bibfile):
 
     ok = True
 
-    with open(bibfile, "r") as buf:
-        db = bibtexparser.load(buf)
-        for entry in db.entries:
-            if "abstract" in entry:
-                sys.stderr.write("remove abstract field...")
-                del entry["abstract"]
-                ok = False
+    db = bdb.parse_file(bibfile, bib_format="bibtex")
+    for entry in db.entries.values():
+        if "abstract" in entry.fields:
+            sys.stderr.write("remove abstract field...")
+            del entry.fields["abstract"]
+            ok = False
 
     if ok:
         sys.stderr.write("ok\n")
         return
 
-    with open(bibfile, "w") as buf:
-        buf.write(BibTexWriter().write(db))
+    db.to_file(bibfile, bib_format="bibtex")
 
     sys.stderr.write("done\n")
 

@@ -13,7 +13,7 @@
       muzzle-bibfile = final.runCommandNoCC "muzzle-bibfile" {
         buildInputs = [ final.makeWrapper ];
       } (let
-        ourPython3 = final.python3.withPackages (ps: [ ps.bibtexparser ]);
+        ourPython3 = final.python3.withPackages (ps: [ ps.pybtex ]);
       in ''
         mkdir -p $out/bin/.unwrapped
         install ${./bin/muzzle-bibfile} -m 755 $out/bin/.unwrapped/muzzle-bibfile
@@ -60,7 +60,7 @@
     };
 
     pythonDevEnv = pkgs.python3.withPackages (ps: [
-      ps.bibtexparser
+      ps.pybtex
       ps.black
       ps.isort
       ps.flake8
