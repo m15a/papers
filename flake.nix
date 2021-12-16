@@ -42,6 +42,9 @@
           installShellCompletion --bash --name pubs.bash pubs.bash
           installShellCompletion --fish --name pubs.fish pubs.fish
         '';
+        meta = old.meta // {
+          description = old.meta.description + " (patched: https://github.com/pubs/pubs/pull/273)";
+        };
       });
 
       papersEnv = final.buildEnv {
