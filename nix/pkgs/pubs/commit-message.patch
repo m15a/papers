@@ -1,0 +1,14 @@
+diff --git a/pubs/plugs/git/git.py b/pubs/plugs/git/git.py
+index 3bff3d6..4cde2d0 100644
+--- a/pubs/plugs/git/git.py
++++ b/pubs/plugs/git/git.py
+@@ -112,7 +112,8 @@ def git_commit(event):
+             git = GitPlugin.get_instance()
+             if len(git.list_of_changes) > 0:
+                 if not git.manual:
+-                    title = ' '.join(sys.argv) + '\n'
++                    cmd, args = os.path.basename(sys.argv[0]), sys.argv[1:]
++                    title = ' '.join([cmd] + args) + '\n'
+                     message = '\n'.join([title] + git.list_of_changes)
+ 
+                     git.shell('add .')

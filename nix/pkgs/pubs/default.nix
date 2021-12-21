@@ -14,7 +14,10 @@ pubs.overridePythonAttrs (old: {
     installShellFiles
   ];
 
-  patches = (old.patches or []) ++ [ ./pubs.patch ];
+  patches = (old.patches or []) ++ [
+    ./pubs.patch
+    ./commit-message.patch
+  ];
 
   postInstall = (old.postInstall or "") + ''
     register="${argcomplete}/bin/register-python-argcomplete"
