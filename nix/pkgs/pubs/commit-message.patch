@@ -1,13 +1,33 @@
 diff --git a/pubs/plugs/git/git.py b/pubs/plugs/git/git.py
-index 3bff3d6..4cde2d0 100644
+index 3bff3d6..93ff851 100644
 --- a/pubs/plugs/git/git.py
 +++ b/pubs/plugs/git/git.py
-@@ -112,7 +112,8 @@ def git_commit(event):
+@@ -1,5 +1,6 @@
+ import os
+ import sys
++import re
+ import argparse
+ from subprocess import Popen, PIPE, STDOUT
+ from pipes import quote as shell_quote
+@@ -105,6 +106,11 @@ def paper_change_event(event):
+             git.list_of_changes.append(event_desc)
+ 
+ 
++def _trim_dirname_from_doc_path(s):
++    if re.match(r".+\.pdf$", s):
++        return os.path.basename(s)
++    return s
++
+ @PostCommandEvent.listen()
+ def git_commit(event):
+     if GitPlugin.is_loaded():
+@@ -112,7 +118,9 @@ def git_commit(event):
              git = GitPlugin.get_instance()
              if len(git.list_of_changes) > 0:
                  if not git.manual:
 -                    title = ' '.join(sys.argv) + '\n'
-+                    cmd, args = os.path.basename(sys.argv[0]), sys.argv[1:]
++                    sys_argv = list(map(_trim_dirname_from_doc_path, sys.argv))
++                    cmd, args = os.path.basename(sys.argv[0]), sys_argv[1:]
 +                    title = ' '.join([cmd] + args) + '\n'
                      message = '\n'.join([title] + git.list_of_changes)
  
