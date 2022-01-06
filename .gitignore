@@ -5,3 +5,4 @@ result
 .cache/
 doc/*
 !doc/.gitkeep
+.DS_Store
