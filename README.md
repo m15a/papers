@@ -32,7 +32,7 @@ pre-commit install
 ### `pubs`の設定
 
 `~/.pubsrc`で，cloneしたこのディレクトリを`pubsdir`に設定する。
-`bibtex_field_excludes`で`abstract`を除外するように指定する。
+`exclude_bibtex_fields`で`abstract`を除外するように指定する。
 また，gitプラグインを有効にしておく。
 
 ```
@@ -44,7 +44,7 @@ pubsdir = /path/to/papers
 ...
 
 # which bibliographic fields to exclude from bibtex files.
-bibtex_field_excludes = abstract
+exclude_bibtex_fields = abstract
 
 ...
 
@@ -55,4 +55,4 @@ active = alias, git
 ```
 
 [1]: https://github.com/pubs/pubs
-[2]: https://github.com/pubs/pubs/pull/273
+[2]: ./nix/pkgs/pubs/commit-message.patch

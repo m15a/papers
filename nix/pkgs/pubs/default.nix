@@ -1,13 +1,13 @@
 { pubs, fetchFromGitHub, installShellFiles, argcomplete }:
 
 pubs.overridePythonAttrs (old: {
-  version = "2021-11-22";
+  version = "2022-01-05";
 
   src = fetchFromGitHub {
     owner = "pubs";
     repo = "pubs";
-    rev = "4ec4ba0390ef6176687326f2f8b5a2c923dfa47b";
-    sha256 = "sha256-0y6dXgkFZYVsbDlYX+FEhChQRPXhwNHNPCrYQNcWclo=";
+    rev = "bf79085e3876fb764ee194be7c35b7207e9a7d70";
+    sha256 = "sha256-/K9QcLlqSS7qYQalmoBXNfEXnWYwACyixpctcCT/RVM=";
   };
 
   buildInputs = (old.buildInputs or []) ++ [
@@ -15,7 +15,6 @@ pubs.overridePythonAttrs (old: {
   ];
 
   patches = (old.patches or []) ++ [
-    ./pubs.patch
     ./commit-message.patch
   ];
 
@@ -26,8 +25,4 @@ pubs.overridePythonAttrs (old: {
     installShellCompletion --bash --name pubs.bash pubs.bash
     installShellCompletion --fish --name pubs.fish pubs.fish
   '';
-
-  meta = old.meta // {
-    description = old.meta.description + " (patched: https://github.com/pubs/pubs/pull/273)";
-  };
 })
