@@ -1,3 +1,4 @@
 added: 2022-02-07 09:39:04.702738
 docfile: docsdir://Baltrusaitis_2019.pdf
-tags: !!set {}
+tags: !!set
+    multimodal: null
